@@ -205,7 +205,22 @@ def from_lever(slug, name):
 BOARD = {"greenhouse": from_greenhouse, "ashby": from_ashby, "lever": from_lever}
 
 
-def main(profile_path, known_path, out_path):
+def from_email(path):
+    """Jobs the daily agent read from email alerts (LinkedIn, Glassdoor, Indeed), already parsed to
+    {title, company, location, url, source, salaryMin?, salaryMax?, salaryEstimated?}."""
+    out = []
+    for j in json.load(open(path)):
+        loc = j.get("location", "")
+        sal = norm_salary(j.get("salaryMin"), j.get("salaryMax"), j.get("currency") or "USD", "yearly")
+        out.append({"title": j.get("title", ""), "company": j.get("company", ""), "location": loc,
+                    "mode": j.get("mode") or mode_of(loc, j.get("title")), "url": j.get("url", ""),
+                    "postedAt": j.get("postedAt", ""), "source": j.get("source", "Email alert"),
+                    "description": j.get("description", ""), "queryKind": "email",
+                    "salaryEstimated": bool(j.get("salaryEstimated")), **sal})
+    return out
+
+
+def main(profile_path, known_path, out_path, email_path=None):
     profile = json.load(open(profile_path))
     known = set(json.load(open(known_path))) if known_path else set()
     report, rows = {}, []
@@ -221,6 +236,10 @@ def main(profile_path, known_path, out_path):
         for b, res, err in ex.map(run_board, profile.get("boards", [])):
             report[f'{b["ats"]}/{b["slug"]}'] = err or len(res)
             rows += res
+    if email_path:
+        em = from_email(email_path)
+        report["email alerts"] = len(em)
+        rows += em
     li = from_linkedin(profile)
     report["linkedin"] = len(li)
     rows += li
@@ -239,6 +258,10 @@ def main(profile_path, known_path, out_path):
             same_co = company_matches(r["company"], r.get("query", "").split()[0])
             relevant = title_ok(r["title"], profile) or re.search(LATAM_RE, t) or (same_co and re.search(LEAD_RE, t))
             located = location_ok(r["location"], r["mode"], profile)
+        elif kind == "email":
+            # Alerts are already targeted; only drop titles that are clearly off-profile
+            relevant = title_ok(r["title"], profile) or re.search(LATAM_RE, t) or re.search(LEAD_RE, t)
+            located = location_ok(r["location"], r["mode"], profile)
         else:
             relevant = title_ok(r["title"], profile) or re.search(LATAM_RE, t)
             located = location_ok(r["location"], r["mode"], profile)
@@ -248,7 +271,7 @@ def main(profile_path, known_path, out_path):
         if r["id"] in seen or r["id"] in known:
             continue
         ceil = r.get("salaryMaxUSD") or r.get("salaryMinUSD")
-        if ceil and ceil < profile.get("salaryMinUSD", 0) * 0.85:
+        if ceil and not r.get("salaryEstimated") and ceil < profile.get("salaryMinUSD", 0) * 0.85:
             continue  # clearly below the floor; keep near-misses for Claude to judge
         seen.add(r["id"])
         out.append(r)
@@ -258,4 +281,5 @@ def main(profile_path, known_path, out_path):
 
 
 if __name__ == "__main__":
-    main(sys.argv[1], sys.argv[2] if len(sys.argv) > 2 and sys.argv[2] != "-" else None, sys.argv[3] if len(sys.argv) > 3 else "candidates.json")
+    main(sys.argv[1], sys.argv[2] if len(sys.argv) > 2 and sys.argv[2] != "-" else None,
+         sys.argv[3] if len(sys.argv) > 3 else "candidates.json", sys.argv[4] if len(sys.argv) > 4 else None)
