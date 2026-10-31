@@ -494,6 +494,12 @@ kbd { font-family: var(--font-mono); font-size: 11px; border: 1px solid var(--li
   function visibleJobs() {
     const q = F.q.trim().toLowerCase();
     let out = jobs.filter((j) => (j.status || "nuevo") === F.tab);
+    // The apply queue and the applied list are records, not triage: show every job, only the search box narrows them
+    if (F.tab === "postular" || F.tab === "postulada") {
+      out = out.filter((j) => !q || [j.title, j.company, j.city, j.sector, j.summary, j.reasons].join(" ").toLowerCase().includes(q));
+      if (F.tab === "postulada") return out.sort((a, b) => Date.parse(b.appliedAt || b.statusChangedAt || 0) - Date.parse(a.appliedAt || a.statusChangedAt || 0));
+      return out.sort((a, b) => (b.score || 0) - (a.score || 0));
+    }
     out = out.filter((j) => {
       const ceil = salaryCeilUSD(j);
       if (ceil == null ? !F.noSalary : ceil < F.salary) return false;
@@ -537,6 +543,7 @@ kbd { font-family: var(--font-mono); font-size: 11px; border: 1px solid var(--li
           ${j.ats && (j.status || "nuevo") !== "postulada" ? `<span class="pill" title="Applied automatically in the cloud each morning when you press Apply">Cloud apply</span>` : ""}
           ${st === "nuevo" && isToday(j.foundAt) ? `<span class="pill new">New</span>` : ""}
           ${st === "postular" && j.applyNote ? `<span class="pill need">Needs you</span>` : ""}
+          ${st !== "postular" && st !== "postulada" && /^do not apply/i.test(j.applyNote || "") ? `<span class="pill need">Duplicate</span>` : ""}
         </div>
         <div class="meta">
           <span class="co">${esc(j.company)}</span>
@@ -546,7 +553,7 @@ kbd { font-family: var(--font-mono); font-size: 11px; border: 1px solid var(--li
           ${j.source ? `<span>via ${esc(j.source)}</span>` : ""}
         </div>
         ${j.reasons ? `<p class="why">${esc(j.reasons)}</p>` : ""}
-        ${st === "postular" && j.applyNote ? `<div class="note warn">${esc(j.applyNote)}</div>` : ""}
+        ${j.applyNote && st !== "postulada" && (st === "postular" || /^do not apply/i.test(j.applyNote)) ? `<div class="note warn">${esc(j.applyNote)}</div>` : ""}
         ${st === "postulada" && j.appliedAt ? `<div class="note ok">Applied ${esc(ago(j.appliedAt))}${j.appliedVia ? ` via ${esc(j.appliedVia)}` : ""}${safeUrl(j.resumeUrl) ? ` · <a href="${esc(safeUrl(j.resumeUrl))}" target="_blank" rel="noopener">Resume sent</a>` : ""}</div>` : ""}
         ${j.summary || plus.length || minus.length ? `<details class="more"><summary>Details</summary><div class="body">
           ${j.summary ? `<div><h5>The role</h5><p>${esc(j.summary)}</p></div>` : ""}
