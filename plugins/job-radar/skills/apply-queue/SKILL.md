@@ -34,7 +34,7 @@ Check these before touching the queue, and if one fails tell Raffaello in Spanis
 ### a. Tailor the resume
 1. Open the job `url` in a new Chrome tab and read the full description.
 2. Write a tailored copy of `config/resume` as JSON (same fields) to
-   `~/Documents/Job Radar/<Company> - <Title>/resume.json`, following `config/resume.positioning`, `rules` and `style`:
+   `~/Documents/Raffa-Jobs/applications/<Company> - <Title>/resume.json`, following `config/resume.positioning`, `rules` and `style`:
    - Rewrite `headline` and `summary` toward the role; order `experience` bullets, `projects` and `skills` groups by relevance; mirror the posting's keywords and `atsKeywords` only where true.
    - Fit **one page**: set `"onePage": true` (compact layout). Summary at most 3 lines (~60 words). The two most relevant roles get 3–4 bullets of at most ~28 words each; keep a bullet only for older roles that matter to this job and list the rest as title, company and dates only; at most 1–2 projects; at most 3 skill groups of ~7 chips. Drop the least relevant content; never change the design.
    - **Never invent or inflate**: no new employers, titles, dates, numbers, licenses, tools or responsibilities. Rewording, reordering and trimming only.

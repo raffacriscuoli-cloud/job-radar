@@ -37,6 +37,25 @@ Lever, Gmail alerts┘   (cloud, 6:47 a.m.)     jobs · config · runs          
 | `runs/*` | One log entry per daily search | Daily agent |
 | `applyRuns/*` | One log entry per cloud application run | Cloud applicator |
 
+## Local folder on your Mac
+
+Everything lives in `~/Documents/Raffa-Jobs/`:
+
+```
+Raffa-Jobs/
+├── job-radar/        clone of this repository (code, design system, master resume)
+└── applications/     one folder per application: tailored resume (JSON, HTML, PDF) and cover letter if any
+```
+
+Set it up once:
+
+```bash
+mkdir -p ~/Documents/Raffa-Jobs/applications && cd ~/Documents/Raffa-Jobs && git clone https://github.com/raffacriscuoli-cloud/job-radar.git
+```
+
+Run Claude Code from `~/Documents/Raffa-Jobs` (`claude --chrome`), or share it with your cloud sessions with
+`claude remote-control`.
+
 ## Install the application agent on your Mac
 
 In Claude Code:
