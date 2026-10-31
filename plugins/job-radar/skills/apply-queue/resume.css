@@ -1,0 +1,64 @@
+/* Resume design system: "Ledger" — banking-grade restraint with an engineering voice.
+   IBM Plex Sans for reading, IBM Plex Mono for metadata (dates, contact, labels), one cobalt accent.
+   Single reading column so ATS parsers extract text in order. US Letter. */
+:root {
+  --ink: #0e1726;        /* names, titles */
+  --body: #2a3442;       /* running text */
+  --muted: #5b6676;      /* companies, secondary text */
+  --rule: #d9dee5;       /* hairlines */
+  --accent: #1d4ed8;     /* cobalt: section labels, headline, markers */
+  --accent-soft: #eef2fb;/* skill chip fill */
+  --sans: "IBM Plex Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --mono: "IBM Plex Mono", "SF Mono", Menlo, Consolas, monospace;
+}
+@page { size: Letter; margin: 0.5in 0.58in 0.5in; }
+* { box-sizing: border-box; }
+html, body { margin: 0; background: #fff; }
+body { font-family: var(--sans); font-size: 9.3pt; line-height: 1.42; color: var(--body); -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+/* Header */
+header { padding-bottom: 9pt; margin-bottom: 4pt; border-bottom: 0.75pt solid var(--rule); position: relative; }
+header::after { content: ""; position: absolute; left: 0; bottom: -0.75pt; width: 64pt; height: 2pt; background: var(--accent); }
+h1 { margin: 0; font-size: 23pt; font-weight: 600; letter-spacing: -0.015em; color: var(--ink); line-height: 1.05; }
+.headline { margin-top: 4pt; font-size: 10.2pt; font-weight: 500; color: var(--accent); }
+.contact { margin-top: 6pt; font-family: var(--mono); font-size: 7.9pt; color: var(--muted); display: flex; flex-wrap: wrap; gap: 0 10pt; }
+.contact span + span::before { content: "/"; color: var(--rule); margin-right: 10pt; }
+
+/* Section labels: mono, letter-spaced, with a hairline running to the margin */
+h2 { display: flex; align-items: center; gap: 8pt; margin: 12pt 0 6pt; font-family: var(--mono); font-size: 7.6pt; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); break-after: avoid; }
+h2::after { content: ""; flex: 1; height: 0.75pt; background: var(--rule); }
+
+.summary { margin: 0; color: var(--body); }
+
+/* Roles */
+.role { margin-bottom: 8pt; break-inside: avoid; }
+.role-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12pt; }
+.role-title { font-weight: 600; color: var(--ink); font-size: 9.9pt; }
+.role-org { color: var(--muted); }
+.role-meta { font-family: var(--mono); font-size: 7.8pt; color: var(--muted); white-space: nowrap; }
+ul { margin: 3pt 0 0; padding-left: 11pt; }
+li { margin: 1.6pt 0; padding-left: 2pt; }
+li::marker { content: "▪  "; color: var(--accent); font-size: 7pt; }
+
+/* Projects */
+.project { margin-bottom: 4.5pt; break-inside: avoid; }
+.project b { font-weight: 600; color: var(--ink); }
+
+/* Education & credentials */
+.facts { display: grid; grid-template-columns: 1fr 1fr; gap: 6pt 20pt; }
+.facts .k { display: block; font-family: var(--mono); font-size: 7.4pt; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 1pt; }
+.facts .v { color: var(--ink); }
+
+/* Skills: label column + chips */
+.skills { display: grid; grid-template-columns: 112pt 1fr; gap: 5pt 10pt; align-items: baseline; }
+.skills .k { font-family: var(--mono); font-size: 7.6pt; letter-spacing: 0.04em; color: var(--ink); font-weight: 500; }
+.chips { display: flex; flex-wrap: wrap; gap: 3pt; }
+.chip { font-size: 8pt; line-height: 1.3; padding: 1pt 5pt; border-radius: 3pt; background: var(--accent-soft); color: var(--ink); }
+
+/* One-page mode for tailored applications (body.compact) */
+body.compact { font-size: 8.85pt; line-height: 1.36; }
+body.compact h1 { font-size: 21pt; }
+body.compact h2 { margin: 9pt 0 4.5pt; }
+body.compact .role { margin-bottom: 6pt; }
+body.compact li { margin: 1pt 0; }
+body.compact .skills { gap: 3.5pt 10pt; }

@@ -1,0 +1,165 @@
+{
+ "name": "Raffaello Criscuoli",
+ "location": "Miami, FL",
+ "phone": "+1 (786) 762-8279",
+ "email": "raffa.criscuoli@gmail.com",
+ "linkedin": "linkedin.com/in/raffaellocriscuoli",
+ "headline": "International Private Banker & AI Systems Builder | AI Agents · Wealth Management · LATAM",
+ "summary": "Hybrid banker and AI builder. 10 years advising HNW and UHNW Latin American clients on offshore investments and discretionary and advisory mandates (FINRA Series 7 and 66). Founder of The Petails, Inc., designing and operating a production system of AI agents and models (Claude, OpenAI image generation, Cloudflare) that sells, produces and delivers physical products to real customers, with human approval at the key checkpoints. Brings AI into the business: self-initiated an automated asset allocation engine for an entire banking team. Uses Claude Code, MCP and agents daily. U.S. and Chilean citizen; native Spanish, English.",
+ "experience": [
+  {
+   "company": "The Petails, Inc.",
+   "title": "Founder & AI Systems Builder",
+   "dates": "Jul 2026 — Present",
+   "location": "Miami, FL",
+   "bullets": [
+    "Founded an AI-native company that creates personalized hardcover illustrated books about real pets; designed and operates the full system that sells, produces and delivers them to customers.",
+    "Built the Factory, a proprietary engine that writes each story with Claude (Anthropic API), generates the illustrations with the OpenAI image API through a generation queue with visual universes, a recurring animal cast and quality tiers, and composes the finished book.",
+    "Designed autonomous agents: Periquito, a conversational intake and sales agent with a customer-journey CRM that drafts follow-ups and recovers leads, and Castor, an SEO agent that writes and publishes articles.",
+    "Built the serverless platform on Cloudflare Workers (portal, admin, factory, intake chat, image queue, SEO, community) with D1, R2 and Cloudflare Access; integrated Shopify (webhooks, payment reconciliation, discount codes), Gelato print-on-demand, Twilio SMS, Gmail API and Meta Ads.",
+    "Created a versioned Prompt Bank (SemVer, canary and live releases via a pointer, test rounds before promotion) and an admin console for production, corrections, sales, customer journey, costs and real-device performance.",
+    "Migrated operations from Make and Google Sheets to a code-based engine with traceable deployments and documented rollback; designed human-in-the-loop approval for customer-facing content, corrections, prompt promotion, deploys and spend."
+   ]
+  },
+  {
+   "company": "BCI Miami · Private Client Group",
+   "title": "AVP, International Banker & Financial Advisor",
+   "dates": "Jul 2023 — Aug 2026",
+   "location": "Miami, FL",
+   "bullets": [
+    "Managed 300+ client relationships with $140M in AUM as a dual-hat banker and financial advisor, driving consistent growth in investment and advisory accounts.",
+    "Provided brokerage and advisory services (non-discretionary and discretionary) across open-architecture products — stocks, mutual funds, ETFs and offshore investments — for individuals and Personal Investment Companies.",
+    "Specialized in offshore investment solutions for Latin American clients, with working knowledge of cross-border tax considerations.",
+    "Highest return on assets on the team; product leader in CBL, discretionary advisory accounts, client trading and unsolicited options strategies.",
+    "Delivered above-plan results in 2025, exceeding revenue and net-new-asset targets while absorbing 40+ additional client relationships without service disruption.",
+    "Self-initiated and built an automated asset allocation and proposal engine with Gemini for the whole banker team, cutting proposal turnaround by ~87% and recovering 8+ working weeks per advisor per year.",
+    "Built several self-initiated business-management dashboards."
+   ]
+  },
+  {
+   "company": "BCI Asset Management",
+   "title": "Client Portfolio Manager",
+   "dates": "Aug 2021 — Jul 2023",
+   "location": "",
+   "bullets": [
+    "Developed international discretionary mandates with international custody through BCI Securities Inc. (Pershing LLC).",
+    "Helped launch managed accounts at BCI Securities Inc. for high-net-worth clients of BCI Asset Management."
+   ]
+  },
+  {
+   "company": "BCI Asset Management",
+   "title": "Wealth Management Advisory",
+   "dates": "Oct 2019 — Aug 2021",
+   "location": "",
+   "bullets": [
+    "Managed 200+ high-net-worth clients with $108M in assets under management.",
+    "Set and delivered quarterly AUM growth goals, targeting clients with $250K+ in mutual fund investments."
+   ]
+  },
+  {
+   "company": "BCI Holding Bank",
+   "title": "Senior Management Control Analyst",
+   "dates": "Jul 2018 — Oct 2019",
+   "location": "Santiago, Chile",
+   "bullets": [
+    "Produced senior-management reporting — the monthly directory, 'The Business Progress' and the 2019 holding budget — regularly reviewed by the CEO and CFO.",
+    "Benchmarked the Chilean banking industry on NIM, ROE, efficiency ratio and ROA."
+   ]
+  },
+  {
+   "company": "Larrain Vial Wealth Management",
+   "title": "Head of Discretionary Mandates",
+   "dates": "Jan 2018 — Jul 2018",
+   "location": "Santiago, Chile",
+   "bullets": [
+    "Led service improvements for $600M in discretionary mandates, upgrading market-trend and portfolio-performance reporting; managed one analyst."
+   ]
+  },
+  {
+   "company": "Larrain Vial Wealth Management",
+   "title": "Product Specialist, Discretionary Mandates",
+   "dates": "Oct 2016 — Jan 2018",
+   "location": "Santiago, Chile",
+   "bullets": [
+    "Supported 150+ UHNW accounts with $600M AUM; joined bankers in client meetings and ran portfolio analysis.",
+    "Member of the economics and asset allocation committees for discretionary portfolios."
+   ]
+  }
+ ],
+ "projects": [
+  {
+   "name": "Asset Allocation & Proposal Engine (BCI, self-initiated)",
+   "text": "Designed and coded the full stack with Gemini: custody-data ingestion, rebalancing and net-impact logic, unified trading grid, and export to PDF and PowerPoint. Scales across desks at no licensing cost."
+  },
+  {
+   "name": "Custom Claude Code skills",
+   "text": "Pipeline diagnostics, element-versioning protocol, dashboards, customer replies, image prompts and project management."
+  },
+  {
+   "name": "Automated Markets Analysis Presentation",
+   "text": "Automated client market-analysis decks using Bloomberg, Excel and think-cell."
+  },
+  {
+   "name": "Co-Founder, Aukala LLC (aukala.com)",
+   "text": "Slow-fashion hat brand with its own e-commerce logistics."
+  }
+ ],
+ "education": [
+  {
+   "school": "Universidad de los Andes, Chile",
+   "degree": "Business Engineering (Ingeniería Comercial)",
+   "dates": "2011 — 2016",
+   "notes": "Teaching assistant in Banking Systems (Carlos Budnevich, PhD) and Project Evaluation (Giorgo Sertsios, PhD)."
+  }
+ ],
+ "licenses": [
+  "FINRA Series 7",
+  "FINRA Series 66"
+ ],
+ "skills": {
+  "AI & agents": [
+   "AI agents",
+   "LLM application design",
+   "Claude (Anthropic API: Opus, Sonnet)",
+   "OpenAI API (image generation)",
+   "Gemini",
+   "Claude Code",
+   "MCP",
+   "Skills & subagents",
+   "Prompt engineering & prompt versioning",
+   "Human-in-the-loop design",
+   "Agentic development (supervisor session + Claude Code, worktrees, subagents, persistent memory)"
+  ],
+  "Engineering & automation": [
+   "JavaScript / Node",
+   "Cloudflare Workers, D1, R2, Access, Wrangler",
+   "Serverless",
+   "APIs: Shopify, Twilio, Gmail, Gelato, Meta Marketing",
+   "Make",
+   "Google Apps Script",
+   "Dashboards"
+  ],
+  "Wealth & client coverage": [
+   "Offshore investments",
+   "Discretionary & advisory mandates",
+   "Asset allocation",
+   "HNW/UHNW relationship management",
+   "Sales & public speaking",
+   "Team management"
+  ],
+  "Platforms": [
+   "Bloomberg",
+   "Morningstar",
+   "Excel & Solver",
+   "think-cell",
+   "Power BI",
+   "Google Workspace",
+   "GitHub"
+  ]
+ },
+ "languages": [
+  "Spanish (native)",
+  "English"
+ ],
+ "citizenship": "U.S. & Chilean citizen"
+}

@@ -18,7 +18,8 @@ Lever              ┘   (cloud, 6:47 a.m.)     jobs · config · runs          
 | `dashboard/job-radar.html` | The dashboard page, published as a claude.ai artifact |
 | `search/radar_search.py` | Collects jobs from LinkedIn (public listings via JobSpy) and the Greenhouse, Ashby and Lever job-board APIs |
 | `agents/daily-search.md` | How the daily scheduled search runs |
-| `plugins/job-radar/skills/apply-queue/` | The application agent (Claude Code skill) and the one-page resume template |
+| `plugins/job-radar/skills/apply-queue/` | The application agent (Claude Code skill), the resume design system (`resume.css`, fonts) and `render_resume.py` |
+| `resume/` | Master resume (JSON + PDF) and the design system guide (`DESIGN.md`) |
 
 ## Dashboard database
 

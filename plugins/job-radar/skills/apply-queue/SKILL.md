@@ -15,6 +15,13 @@ Raffaello Criscuoli's application agent. It works through the jobs he marked **A
 
 He chose **fully automatic** submission: do not ask before pressing Submit when the application is complete and every answer is truthful and sourced. The safety rules below still apply and override speed.
 
+## 0. Preflight (every run)
+Check these before touching the queue, and if one fails tell Raffaello in Spanish exactly what to do, then stop:
+- `ArtifactData` is available (it comes with signing in to Claude Code with his claude.ai account). If not: "Inicia sesión en Claude Code con tu cuenta de claude.ai".
+- Claude in Chrome tools are available. If not: "Instala o activa la extensión Claude in Chrome y conéctala a Claude Code".
+- `python3 --version` works. If not: "Ejecuta `xcode-select --install` en la Terminal".
+- Google Chrome is installed at `/Applications/Google Chrome.app` (or `CHROME_PATH` is set) so `render_resume.py` can print PDFs.
+
 ## 1. Load the queue and the facts
 
 1. `ArtifactData` `query` on collection `jobs` with `where: [["status","==","postular"]]`. Skip jobs whose `applyNote` starts with "Needs you" unless Raffaello says he resolved it.
@@ -26,15 +33,17 @@ He chose **fully automatic** submission: do not ask before pressing Submit when 
 
 ### a. Tailor the resume
 1. Open the job `url` in a new Chrome tab and read the full description.
-2. Fill `resume_template.html` (in this skill's folder) from `config/resume`, tailored to this job:
-   - Rewrite the headline and summary toward the role, and order bullets, projects and skill groups by relevance. Mirror the posting's own keywords where they are true for him.
-   - Keep it to **one page**. Drop the least relevant bullets rather than shrinking the font.
-   - **Never invent or inflate**: no new employers, titles, dates, numbers, licenses, tools or responsibilities. Rewording and reordering only.
-3. Save to `~/Documents/Job Radar/<Company> - <Title>/Raffaello Criscuoli - Resume.html` and print it to PDF next to it:
+2. Write a tailored copy of `config/resume` as JSON (same fields) to
+   `~/Documents/Job Radar/<Company> - <Title>/resume.json`, following `config/resume.positioning`, `rules` and `style`:
+   - Rewrite `headline` and `summary` toward the role; order `experience` bullets, `projects` and `skills` groups by relevance; mirror the posting's keywords and `atsKeywords` only where true.
+   - Fit **one page**: set `"onePage": true` (compact layout). Summary at most 3 lines (~60 words). The two most relevant roles get 3–4 bullets of at most ~28 words each; keep a bullet only for older roles that matter to this job and list the rest as title, company and dates only; at most 1–2 projects; at most 3 skill groups of ~7 chips. Drop the least relevant content; never change the design.
+   - **Never invent or inflate**: no new employers, titles, dates, numbers, licenses, tools or responsibilities. Rewording, reordering and trimming only.
+   - Leave out `rules`, `positioning`, `style`, `pending`, `atsKeywords` and `updatedAt` from the copy.
+3. Render it with this skill's design system (IBM Plex, cobalt accent, ATS-safe single column):
    ```bash
-   "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless --disable-gpu --no-pdf-header-footer --print-to-pdf="<folder>/Raffaello Criscuoli - Resume.pdf" "file://<folder>/Raffaello Criscuoli - Resume.html"
+   python3 "<this skill's folder>/render_resume.py" "<folder>/resume.json" "<folder>/Raffaello Criscuoli - Resume.pdf"
    ```
-   Open the PDF once and check it is one page and nothing is clipped.
+   It finds Chrome automatically on macOS. Open the PDF once: it must be one page with nothing clipped; if it spills onto page two, trim and render again.
 
 ### b. Apply
 1. Press the posting's Apply button. Prefer the company's own application over LinkedIn Easy Apply when both exist.

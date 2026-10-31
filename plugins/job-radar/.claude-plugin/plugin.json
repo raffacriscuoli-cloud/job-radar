@@ -1,6 +1,6 @@
 {
   "name": "job-radar",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Apply to jobs from the Job Radar dashboard with Claude in Chrome, using a tailored English resume per job.",
   "author": { "name": "Raffaello Criscuoli" }
 }
