@@ -237,7 +237,7 @@ kbd { font-family: var(--font-mono); font-size: 11px; border: 1px solid var(--li
     <div class="summary" id="summary">
       <div class="stat"><span class="k">New today</span><span class="v" id="sToday">–</span><span class="s">from the latest search</span></div>
       <div class="stat"><span class="k">Strong fit</span><span class="v" id="sHigh">–</span><span class="s">80+ and not reviewed</span></div>
-      <div class="stat"><span class="k">Apply queue</span><span class="v" id="sApply">–</span><span class="s">waiting for the agent</span></div>
+      <div class="stat"><span class="k">Apply queue</span><span class="v" id="sApply">–</span><span class="s">cloud applies daily at 7:43</span></div>
       <div class="stat"><span class="k">Applied</span><span class="v" id="sDone">–</span><span class="s">all time</span></div>
     </div>
 
@@ -534,6 +534,7 @@ kbd { font-family: var(--font-mono); font-size: 11px; border: 1px solid var(--li
           <h3>${url ? `<a href="${esc(url)}" target="_blank" rel="noopener">${esc(j.title)}</a>` : esc(j.title)}</h3>
           ${j.isExample ? `<span class="pill ex">Example</span>` : ""}
           ${j.chileCompany ? `<span class="pill remote">Chilean company</span>` : ""}
+          ${j.ats && (j.status || "nuevo") !== "postulada" ? `<span class="pill" title="Applied automatically in the cloud each morning when you press Apply">Cloud apply</span>` : ""}
           ${st === "nuevo" && isToday(j.foundAt) ? `<span class="pill new">New</span>` : ""}
           ${st === "postular" && j.applyNote ? `<span class="pill need">Needs you</span>` : ""}
         </div>

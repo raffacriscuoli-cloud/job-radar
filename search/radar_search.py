@@ -157,6 +157,7 @@ def from_greenhouse(slug, name):
         loc = (j.get("location") or {}).get("name", "")
         out.append({"title": j.get("title", ""), "company": name, "location": loc, "mode": mode_of(loc, j.get("title")),
                     "url": j.get("absolute_url", ""), "postedAt": j.get("updated_at", ""), "source": "Greenhouse",
+                    "ats": {"type": "greenhouse", "slug": slug, "id": str(j.get("id"))},
                     "description": strip_html(content), **norm_salary(lo, hi, "USD", "yearly")})
     return out
 
@@ -180,6 +181,7 @@ def from_ashby(slug, name):
         mode = "remote" if j.get("isRemote") else mode_of(loc, j.get("workplaceType"))
         out.append({"title": j.get("title", ""), "company": name, "location": loc, "mode": mode,
                     "url": j.get("jobUrl", ""), "postedAt": j.get("publishedAt", ""), "source": "Ashby",
+                    "ats": {"type": "ashby", "slug": slug, "id": str(j.get("id"))},
                     "description": strip_html(j.get("descriptionPlain") or j.get("descriptionHtml", "")),
                     **norm_salary(lo, hi, cur, "hourly" if "hour" in interval else "yearly")})
     return out
@@ -198,6 +200,7 @@ def from_lever(slug, name):
                     "mode": "remote" if j.get("workplaceType") == "remote" else mode_of(loc, j.get("workplaceType")),
                     "url": j.get("hostedUrl", ""), "postedAt": time.strftime("%Y-%m-%d", time.gmtime((j.get("createdAt") or 0) / 1000)),
                     "source": "Lever", "description": strip_html(j.get("descriptionPlain", "")),
+                    "ats": {"type": "lever", "slug": slug, "id": str(j.get("id"))},
                     **norm_salary(sr.get("min"), sr.get("max"), sr.get("currency") or "USD", interval)})
     return out
 
@@ -218,6 +221,19 @@ def from_email(path):
                     "description": j.get("description", ""), "queryKind": "email",
                     "salaryEstimated": bool(j.get("salaryEstimated")), **sal})
     return out
+
+
+ATS_URL = [("greenhouse", r"(?:job-boards|boards)\.greenhouse\.io/([\w-]+)/jobs/(\d+)"),
+           ("lever", r"jobs\.lever\.co/([\w.-]+)/([0-9a-f-]{36})"),
+           ("ashby", r"jobs\.ashbyhq\.com/([\w.%-]+)/([0-9a-f-]{36})")]
+
+
+def ats_from_url(url):
+    for kind, rx in ATS_URL:
+        m = re.search(rx, url or "")
+        if m:
+            return {"type": kind, "slug": m.group(1), "id": m.group(2)}
+    return None
 
 
 def main(profile_path, known_path, out_path, email_path=None):
@@ -273,6 +289,10 @@ def main(profile_path, known_path, out_path, email_path=None):
         ceil = r.get("salaryMaxUSD") or r.get("salaryMinUSD")
         if ceil and not r.get("salaryEstimated") and ceil < profile.get("salaryMinUSD", 0) * 0.85:
             continue  # clearly below the floor; keep near-misses for Claude to judge
+        if not r.get("ats"):
+            ats = ats_from_url(r.get("url"))
+            if ats:
+                r["ats"] = ats
         seen.add(r["id"])
         out.append(r)
     json.dump({"report": report, "candidates": out}, open(out_path, "w"), ensure_ascii=False, indent=1)

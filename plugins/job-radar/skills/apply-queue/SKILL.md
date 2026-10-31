@@ -24,7 +24,7 @@ Check these before touching the queue, and if one fails tell Raffaello in Spanis
 
 ## 1. Load the queue and the facts
 
-1. `ArtifactData` `query` on collection `jobs` with `where: [["status","==","postular"]]`. Skip jobs whose `applyNote` starts with "Needs you" unless Raffaello says he resolved it.
+1. `ArtifactData` `query` on collection `jobs` with `where: [["status","==","postular"]]`. Jobs with an `ats` block (public Greenhouse, Lever or Ashby forms) are applied automatically by the cloud applicator every morning: take them here only when their `applyNote` starts with "Needs you" (for example a CAPTCHA the cloud could not pass) or Raffaello asks. Otherwise skip jobs whose `applyNote` starts with "Needs you" unless he says he resolved it.
 2. `get` `config/applicant` — contact details and standard answers (salary $200,000, start immediately, U.S. citizen, no sponsorship, the `eeo` answers for voluntary self-identification, FINRA status, the `needsYou` list).
 3. `get` `config/resume` — his factual resume. This and `config/applicant` are the **only** sources of truth about him.
 4. Tell him in one line how many jobs are in the queue, then start. Process them highest `score` first.
