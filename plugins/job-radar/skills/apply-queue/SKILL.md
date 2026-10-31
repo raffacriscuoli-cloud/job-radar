@@ -18,7 +18,7 @@ He chose **fully automatic** submission: do not ask before pressing Submit when 
 ## 1. Load the queue and the facts
 
 1. `ArtifactData` `query` on collection `jobs` with `where: [["status","==","postular"]]`. Skip jobs whose `applyNote` starts with "Needs you" unless Raffaello says he resolved it.
-2. `get` `config/applicant` — contact details and standard answers (salary $200,000, start immediately, U.S. citizen, no sponsorship, EEO = decline to self-identify, FINRA status, the `needsYou` list).
+2. `get` `config/applicant` — contact details and standard answers (salary $200,000, start immediately, U.S. citizen, no sponsorship, the `eeo` answers for voluntary self-identification, FINRA status, the `needsYou` list).
 3. `get` `config/resume` — his factual resume. This and `config/applicant` are the **only** sources of truth about him.
 4. Tell him in one line how many jobs are in the queue, then start. Process them highest `score` first.
 
@@ -41,6 +41,7 @@ He chose **fully automatic** submission: do not ask before pressing Submit when 
 2. Fill every field from `config/applicant` and the tailored resume. Upload the tailored PDF wherever a resume is requested. If the browser tools cannot attach a local file, ask Raffaello to attach `<folder>/Raffaello Criscuoli - Resume.pdf` himself, wait, then continue.
 3. Cover letter: only when the form **requires** one. Then write a short (≤200 words), specific letter in English from the same facts, save it as PDF in the same folder, and attach it. Leave optional cover-letter fields empty.
 4. Screening questions: answer in English, concisely, from the facts only. Salary fields → 200000 (or the free-text answer). Start date → immediately.
+   Voluntary self-identification (race, ethnicity, gender, veteran, disability): use `config/applicant.eeo` exactly; anything it doesn't cover → "Decline to self-identify".
 5. Submit, then confirm the confirmation page or email. Take note of what it says.
 
 ### c. Record the result
