@@ -1,0 +1,53 @@
+# Job Radar
+
+Raffaello Criscuoli's personal job search system: a daily search agent, a dashboard to triage jobs, and an
+application agent that applies with a tailored English resume.
+
+**Dashboard:** https://claude.ai/artifact/F5xUnH7fYTGH5pTxERPNLX (private)
+
+## How it fits together
+
+```
+LinkedIn (JobSpy) ─┐
+Greenhouse / Ashby ├─► Daily search agent ─► Dashboard database ─► you press Apply ─► apply-queue skill
+Lever              ┘   (cloud, 6:47 a.m.)     jobs · config · runs                     (Claude in Chrome, your Mac)
+```
+
+| Path | What it is |
+|---|---|
+| `dashboard/job-radar.html` | The dashboard page, published as a claude.ai artifact |
+| `search/radar_search.py` | Collects jobs from LinkedIn (public listings via JobSpy) and the Greenhouse, Ashby and Lever job-board APIs |
+| `agents/daily-search.md` | How the daily scheduled search runs |
+| `plugins/job-radar/skills/apply-queue/` | The application agent (Claude Code skill) and the one-page resume template |
+
+## Dashboard database
+
+| Document | Holds | Edited by |
+|---|---|---|
+| `config/profile` | Roles, pay, cities, industries, search keywords, Chilean companies, background, interests | You, on the dashboard's Search profile tab |
+| `config/agent` | Search script and source list | Claude |
+| `config/applicant` | Standard answers for application forms | Claude, on request |
+| `config/resume` | Factual resume used to tailor each application | Claude, on request |
+| `config/seen` | Jobs already evaluated, so they aren't proposed twice | Daily agent |
+| `jobs/*` | Scored jobs and their status (new, saved, apply queue, applied, dismissed) | Daily agent and you |
+| `runs/*` | One log entry per daily search | Daily agent |
+
+## Install the application agent on your Mac
+
+In Claude Code:
+
+```
+/plugin marketplace add raffacriscuoli-cloud/job-radar
+/plugin install job-radar@job-radar
+```
+
+Then install the Claude in Chrome extension, open Claude Code and say **"apply to my queue"**.
+
+## Run the search by hand
+
+```bash
+pip install python-jobspy
+python3 search/radar_search.py profile.json known_ids.json candidates.json
+```
+
+`profile.json` is `config/agent` merged with `config/profile`; `known_ids.json` is a JSON list of job ids to skip.

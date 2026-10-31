@@ -1,0 +1,11 @@
+{
+  "name": "job-radar",
+  "owner": { "name": "Raffaello Criscuoli" },
+  "plugins": [
+    {
+      "name": "job-radar",
+      "source": "./plugins/job-radar",
+      "description": "Raffaello's job search toolkit: the apply-queue skill that applies to jobs from the Job Radar dashboard with a tailored English resume."
+    }
+  ]
+}
